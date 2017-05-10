@@ -1,17 +1,18 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 #include <Windows.h>
 #include "matrix.h"
 
 #define WIDTH 1920
 #define HEIGHT 1080
-#define Row 960
-#define Col 540
-#define GAP 50
+#define Row 480
+#define Col 270
+#define GAP 25
 
-#define Cell_Color sf::Color::Yellow
-#define Background_Color sf::Color::Black
+#define Cell_Color sf::Color::Black
+#define Background_Color sf::Color::White
 
 //#include "game.h"
 #include "game-old.h"
@@ -20,7 +21,17 @@
 
 int main(int argv, char **argc)
 {
+	unsigned long long time = GetTickCount64();
+	unsigned long long time2 = GetTickCount64();
+	sf::Font font;
+	if (!font.loadFromFile("C:\\Projects\\Matrix\\Release\\font.ttf"))
+	{
+		// erreur...
+		exit(EXIT_FAILURE);
+	}
 	sf::Text text;
+	text.setFont(font); 
+	text.setCharacterSize(48);
 	text.setFillColor(sf::Color::Red);
 	bool pause = true;
 	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Philo", sf::Style::Fullscreen);
@@ -74,10 +85,22 @@ int main(int argv, char **argc)
 		std::cout << "Lives : " << game.getLives() << std::endl;
 		if(!pause) game.nextStep();
 		if (pause) std::cout << "Pause" << std::endl;
-		text.setString(std::to_string(game.getLives()));
+		double speed;
+		if (time != GetTickCount64() && !pause)
+			speed = 1000 / (GetTickCount64() - time);
+		else
+			speed = 0;
+		time = GetTickCount64();
+		if (GetTickCount64() - time2 > 500)
+		{
+			time2 = GetTickCount64();
+			std::stringstream ss;
+			ss << "Cycles : " << game.getLives() << std::endl << "Speed : " << speed << " Cycle/Second";
+			text.setString(ss.str());
+		}
 		window.clear(Background_Color);
-		game.display();
 		window.draw(text);
+		game.display();
 		window.display();
 	}
 	return 0;
