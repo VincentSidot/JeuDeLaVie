@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cryptools.h" />
+    <ClInclude Include="game-old.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="matrix.h" />
   </ItemGroup>
