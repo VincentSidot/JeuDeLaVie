@@ -7,12 +7,13 @@
 
 #define WIDTH 1920
 #define HEIGHT 1080
-#define Row 480
-#define Col 270
-#define GAP 25
+#define K 2
+#define Row 1920 / K
+#define Col 1080 / K
+#define GAP 30
 
-#define Cell_Color sf::Color::Black
-#define Background_Color sf::Color::White
+#define Cell_Color sf::Color::Magenta
+#define Background_Color sf::Color::Black
 
 //#include "game.h"
 #include "game-old.h"
@@ -62,6 +63,10 @@ int main(int argv, char **argc)
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) pause = !pause;
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+				{
+					game.start(matrix);
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
 				{
 					for (int i = 1; i < matrix.row(); i++)
 					{
